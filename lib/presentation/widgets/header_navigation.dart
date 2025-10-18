@@ -1,39 +1,74 @@
 import 'package:flutter/material.dart';
 
-class HeaderNavigation extends StatelessWidget implements PreferredSizeWidget{
+class HeaderNavigation extends StatelessWidget implements PreferredSizeWidget {
   final Function(String) onNavigate;
-  const HeaderNavigation({super.key, required this.onNavigate});
+  final int selectedIndex;
+
+  const HeaderNavigation({
+    super.key,
+    required this.onNavigate,
+    required this.selectedIndex,
+  });
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    final List<String> pages = [
+      "About Me",
+      "Skills",
+      "Portfolio",
+      "CONTACT ME",
+    ];
+
     return AppBar(
       title: const Text(
         "Atmadarsh",
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
-      centerTitle: false,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       elevation: 1,
+      centerTitle: false,
       actions: [
-        _navItem("About Me", onNavigate),
-        _navItem("Skills", onNavigate),
-        _navItem("Portfolio", onNavigate),
-        _navItem("CONTACT ME", onNavigate),
+        for (int i = 0; i < pages.length; i++)
+          _navItem(
+            title: pages[i],
+            isSelected: selectedIndex == i,
+            onTap: () => onNavigate(pages[i]),
+          ),
         const SizedBox(width: 20),
       ],
     );
   }
 
-  Widget _navItem(String title, Function(String) onTap){
-    return  TextButton(
-      onPressed: () => onTap(title),
-      child: Text(
-        title,
-        style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w500),
+  Widget _navItem({
+    required String title,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: TextButton(
+        onPressed: onTap,
+        style: TextButton.styleFrom(
+          backgroundColor: isSelected ? Colors.white : Colors.black,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: isSelected ?const BorderSide(color: Colors.white):BorderSide.none,
+          ),
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: isSelected ? Colors.black : Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }
-
 
   @override
   Size get preferredSize => const Size.fromHeight(60);

@@ -6,15 +6,20 @@ class Buttons{
       required String title,
       Color? color,
       double? fontSize,
-      VoidCallback? onTap
+   FontWeight? fontWeight,
+    void Function()? onTap
   }){
-      return Container(
+      return GestureDetector(
+          onTap: onTap ?? (){},
+         child:  Container(
           color: buttonBackgroundColor,
           child: Text(title,
               style: TextStyle(
                   color: color,
                   fontSize:fontSize,
+                fontWeight: fontWeight
               ))
+      )
       );
 
   }
