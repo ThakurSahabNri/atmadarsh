@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:atmadarsh/presentation/widgets/buttons.dart';
-import 'package:atmadarsh/presentation//widgets/header_navigation.dart';
+import 'package:atmadarsh/presentation/widgets/header_navigation.dart';
 import 'package:atmadarsh/presentation/screens/about_page.dart';
 import 'package:atmadarsh/presentation/screens/skills_page.dart';
 import 'package:atmadarsh/presentation/screens/portfolio_page.dart';
@@ -10,35 +9,54 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState()=>_HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
-   String _currentPage = "About Me";
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
 
-   Widget _getPage(){
-     switch(_currentPage){
-       case "Skills":
-         return const SkillsPage();
-       case "Portfolio":
-         return const PortfolioPage();
-       case "CONTACT ME":
-         return const ContactMePage();
-       default:
-         return const AboutPage();
-     }
-   }
+  void handleNavigation(String page) {
+    setState(() {
+      switch (page) {
+        case "About Me":
+          selectedIndex = 0;
+          break;
+        case "Skills":
+          selectedIndex = 1;
+          break;
+        case "Portfolio":
+          selectedIndex = 2;
+          break;
+        case "CONTACT ME":
+          selectedIndex = 3;
+          break;
+      }
+    });
+  }
 
-   @override
-  Widget build(BuildContext context){
-      return Scaffold(
-        appBar: HeaderNavigation(
-          onNavigate: (page){
-          setState(() {
-            _currentPage=page;
-          });
-        }),
-        body: _getPage(),
-      );
-   }
+  Widget _getSelectedPage() {
+    switch (selectedIndex) {
+      case 0:
+        return const AboutPage();
+      case 1:
+        return const SkillsPage();
+      case 2:
+        return const PortfolioPage();
+      case 3:
+        return const ContactMePage();
+      default:
+        return const AboutPage();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: HeaderNavigation(
+        selectedIndex: selectedIndex,
+        onNavigate: handleNavigation,
+      ),
+      body: _getSelectedPage(),
+    );
+  }
 }
