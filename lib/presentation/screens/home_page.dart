@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   Widget _getSelectedPage() {
     switch (selectedIndex) {
       case 0:
-        return const AboutPage();
+        return AboutPage();
       case 1:
         return const SkillsPage();
       case 2:
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       case 3:
         return const ContactMePage();
       default:
-        return const AboutPage();
+        return AboutPage();
     }
   }
 
