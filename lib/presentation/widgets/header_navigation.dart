@@ -56,7 +56,6 @@ class HeaderNavigation extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
-            side: isSelected ?const BorderSide(color: Colors.white):BorderSide.none,
           ),
         ),
         child: Text(
