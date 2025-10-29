@@ -18,6 +18,11 @@ class AboutPage extends StatelessWidget{
     final isOdd = skills.length.isOdd;
     final displayCount = isOdd ? skills.length - 1 : skills.length;
 
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // If it's a mobile screen, use 1 column layout
+    bool isMobile = screenWidth < 600; // you can adjust threshold if needed
+
     return SingleChildScrollView(
       child:Center(
         child:Padding(
@@ -94,11 +99,11 @@ class AboutPage extends StatelessWidget{
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: displayCount,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 2 columns
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isMobile? 1: 2, // 2 columns
                 mainAxisSpacing: 14,
                 crossAxisSpacing: 14,
-                childAspectRatio: 5, // adjust width:height ratio
+                childAspectRatio: isMobile? 6:5, // adjust width:height ratio
               ),
               itemBuilder: (context, index) {
                 return skillBox(title: skills[index].toString());
@@ -106,8 +111,8 @@ class AboutPage extends StatelessWidget{
             ),
 
 
-            // 🔹 Centered last item if odd
-            if (isOdd) ...[
+            //  Centered last item if odd
+            if (isOdd && !isMobile) ...[
               const SizedBox(height: 16),
               Align(
                 alignment: Alignment.center,
@@ -117,6 +122,12 @@ class AboutPage extends StatelessWidget{
                 ),
               ),
             ],
+
+              // For mobile, just put the last item normally below
+              if (isOdd && isMobile) ...[
+                const SizedBox(height: 14),
+                skillBox(title: skills.last),
+              ],
 
             SizedBox(height: 30,),
             Image.asset(
