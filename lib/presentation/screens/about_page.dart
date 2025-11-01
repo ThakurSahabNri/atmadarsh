@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:atmadarsh/core/theme/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:atmadarsh/presentation/widgets/page_title_view.dart';
+import 'package:atmadarsh/core/utils/DeviceInfoUtil.dart';
 
 class AboutPage extends StatelessWidget{
    AboutPage({super.key});
@@ -17,11 +19,7 @@ class AboutPage extends StatelessWidget{
   Widget build(BuildContext context){
     final isOdd = skills.length.isOdd;
     final displayCount = isOdd ? skills.length - 1 : skills.length;
-
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // If it's a mobile screen, use 1 column layout
-    bool isMobile = screenWidth < 600; // you can adjust threshold if needed
+    final isMobile = DeviceTypeUtil.isMobile(context);
 
     return SingleChildScrollView(
       child:Center(
@@ -29,25 +27,7 @@ class AboutPage extends StatelessWidget{
           padding: EdgeInsetsGeometry.all(40),
           child:Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.darkGrey,
-                  border: Border.all(
-                    color: AppColors.primaryBlack, // subtle border
-                    width: 4,
-                  )
-              ),
-              child: Text("ABOUT ME",
-              style: TextStyle(
-                color: AppColors.textBlack,
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                fontFamily: "Montserrat",
-                letterSpacing: 10
-              ),
-              ),
-            ),
+            PageTitleView.pageTitleView("ABOUT ME"),
 
             SizedBox(height: 30,),
             Text(aboutMe,
