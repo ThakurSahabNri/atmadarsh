@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:atmadarsh/core/theme/app_colors.dart';
+import 'package:atmadarsh/presentation/widgets/page_title_view.dart';
+import 'package:atmadarsh/core/utils/DeviceInfoUtil.dart';
+
 class SkillsPage extends StatelessWidget{
    SkillsPage({super.key});
 
@@ -13,6 +16,8 @@ class SkillsPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    final isMobile = DeviceTypeUtil.isMobile(context);
+
     return SingleChildScrollView(
       child:Center(
         child:Padding(
@@ -20,28 +25,10 @@ class SkillsPage extends StatelessWidget{
           child: Column(
           children: [
 
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            decoration: BoxDecoration(
-                color: AppColors.darkGrey,
-                border: Border.all(
-                  color: AppColors.primaryBlack, // subtle border
-                  width: 4,
-                )
-            ),
-            child: Text("SKILLS",
-              style: TextStyle(
-                  color: AppColors.textBlack,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  fontFamily: "Montserrat",
-                  letterSpacing: 10
-              ),
-            ),
-          ),
+            PageTitleView.pageTitleView("SKILLS"),
 
             SizedBox(height: 50,),
-            createSkillSection(),
+            createSkillSection(isMobile),
 
 
         ],
@@ -50,16 +37,16 @@ class SkillsPage extends StatelessWidget{
     )
     );
   }
-  Widget createSkillSection(){
+  Widget createSkillSection(bool isMobile){
      return GridView.builder(
          physics: const NeverScrollableScrollPhysics(),
          shrinkWrap: true,
          itemCount: skills.length,
-         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-           crossAxisCount: 4, // 2 columns
+         gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+           crossAxisCount: isMobile?2:4, // 2 columns
            mainAxisSpacing: 10,
            crossAxisSpacing: 10,
-           childAspectRatio: 3, // adjust width:height ratio
+           childAspectRatio: isMobile?4:3, // adjust width:height ratio
          ),
          itemBuilder: (context,index){
            return skillSection(title: skills[index]);
