@@ -8,7 +8,7 @@ class TextStyles {
   const TextStyles({
     this.textColor = Colors.black,
     this.fontSize = 14,
-    this.fontFamily = 'Poppins', // 👈 default font (customize)
+    this.fontFamily = 'Montserrat', // 👈 default font (customize)
   });
 
   TextStyle getRegularStyle() {
