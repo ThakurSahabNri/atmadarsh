@@ -20,4 +20,7 @@ class AppColors {
   // 🧭 Button / Element states
   static const Color buttonActive = Color(0xFFFFFFFF);
   static const Color buttonInactive = Color(0xFF1C1C1C);
+
+  static const Color footerBackgroundColor = Color(0xFF000000);
+
 }
