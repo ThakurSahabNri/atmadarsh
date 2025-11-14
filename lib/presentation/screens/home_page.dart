@@ -39,11 +39,11 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return AboutPage();
       case 1:
-        return const SkillsPage();
+        return  SkillsPage();
       case 2:
-        return const PortfolioPage();
+        return  PortfolioPage();
       case 3:
-        return const ContactMePage();
+        return  ContactMePage();
       default:
         return AboutPage();
     }
