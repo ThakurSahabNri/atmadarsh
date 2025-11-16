@@ -1,3 +1,4 @@
+import 'package:atmadarsh/data/models/link.dart';
 class ProjectModel {
   final String title;
   final String? subtitle;
@@ -17,7 +18,7 @@ class ProjectModel {
   final List<String>? galleryImages;
 
   /// GitHub, Play Store, Website, etc.
-  final List<ProjectLink>? links;
+  final List<LinkModel>? links;
 
   /// Date range like "2023 - Present"
   final String? timeline;
@@ -40,7 +41,7 @@ class ProjectModel {
   });
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) {
-    return Project(
+    return ProjectModel(
       title: json["title"] ?? "",
       subtitle: json["subtitle"],
       shortDescription: json["shortDescription"],
@@ -51,9 +52,7 @@ class ProjectModel {
       thumbnailUrl: json["thumbnailUrl"],
       galleryImages:
       (json["galleryImages"] as List?)?.map((e) => e.toString()).toList(),
-      links: (json["links"] as List?)
-          ?.map((e) => ProjectLink.fromJson(e))
-          .toList(),
+      links: (json["links"] as List?)?.map((e) => LinkModel.fromJson(e)).toList(),
       timeline: json["timeline"],
       isFeatured: json["isFeatured"] ?? false,
     );

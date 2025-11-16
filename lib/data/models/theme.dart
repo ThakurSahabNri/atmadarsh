@@ -41,7 +41,7 @@ class ThemeConfigModel {
   });
 
   factory ThemeConfigModel.fromJson(Map<String, dynamic> json) {
-    return ThemeConfig(
+    return ThemeConfigModel(
       primaryColor: json["primaryColor"] ?? "#000000",
       backgroundColor: json["backgroundColor"] ?? "#FFFFFF",
       textColor: json["textColor"] ?? "#000000",

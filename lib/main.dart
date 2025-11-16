@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:atmadarsh/presentation/screens/home_page.dart';
 import 'package:atmadarsh/core/theme/app_colors.dart';
+import 'config_editor/config_editor_screen.dart';
+import 'package:atmadarsh/data/models/portfolio_config.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load JSON file
+  final jsonString = await rootBundle
+      .loadString("assets/portfolio_config_json.json");
+
+  // Decode JSON → Model
+  final config =
+  PortfolioConfig.fromJson(jsonDecode(jsonString));
+
+  runApp(MyApp(initialConfig: config));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final PortfolioConfig initialConfig;
+  const MyApp({super.key, required this.initialConfig});
 
   // This widget is the root of your application.
   @override
@@ -42,7 +57,8 @@ class MyApp extends StatelessWidget {
           onSurface: AppColors.textWhite,
         ),
       ),
-      home:HomePage(),
+      // home:HomePage(),
+      home: ConfigEditorScreen(initialConfig: initialConfig,),
     );
   }
 }
