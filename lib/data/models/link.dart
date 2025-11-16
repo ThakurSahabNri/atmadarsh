@@ -1,4 +1,4 @@
-class ContactLinkModel {
+class LinkModel {
   /// human readable label: "GitHub", "LinkedIn"
   final String label;
 
@@ -11,15 +11,15 @@ class ContactLinkModel {
   /// Category (e.g., "social", "code", "portfolio")
   final String? type;
 
-  ContactLinkModel({
+  LinkModel({
     required this.label,
     required this.url,
     this.icon,
     this.type,
   });
 
-  factory ContactLinkModel.fromJson(Map<String, dynamic> json) {
-    return ContactLink(
+  factory LinkModel.fromJson(Map<String, dynamic> json) {
+    return LinkModel(
       label: json["label"] ?? "",
       url: json["url"] ?? "",
       icon: json["icon"],

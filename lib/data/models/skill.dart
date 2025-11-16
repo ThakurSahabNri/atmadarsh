@@ -42,7 +42,7 @@ class SkillModel {
 
   // ----------- FROM JSON -----------
   factory SkillModel.fromJson(Map<String, dynamic> json) {
-    return Skill(
+    return SkillModel(
       name: json["name"] ?? "",
       description: json["description"],
       category: json["category"],
