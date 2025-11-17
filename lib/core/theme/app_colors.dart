@@ -23,4 +23,30 @@ class AppColors {
 
   static const Color footerBackgroundColor = Color(0xFF000000);
 
+
+  /// Converts "#RRGGBB" or "#AARRGGBB" to Color safely
+  static Color getColor(String? hex) {
+    if (hex == null || hex.isEmpty) {
+      return Colors.black; // default fallback color
+    }
+
+    String formatted = hex.replaceAll("#", "").toUpperCase();
+
+    // If only RGB is provided → add full opacity
+    if (formatted.length == 6) {
+      formatted = "FF$formatted";
+    }
+
+    // If invalid, fallback
+    if (formatted.length != 8) {
+      return Colors.black;
+    }
+
+    try {
+      return Color(int.parse("0x$formatted"));
+    } catch (e) {
+      return Colors.black;
+    }
+  }
+
 }
