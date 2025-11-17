@@ -6,13 +6,13 @@ class TextEditingControl extends StatefulWidget {
 
   final int? maxLine;
   final String? hintText;
-  final dynamic? textType;
+  final dynamic textType;
   final bool isMandatory;
   final bool expend;
   final TextEditingController? textEditingController;
   final String? errorText;
 
-  TextEditingControl({
+  const TextEditingControl({super.key, 
     this.maxLine=1,
     this.hintText,
     this.textType,

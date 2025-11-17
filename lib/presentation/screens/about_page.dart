@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:atmadarsh/core/theme/app_colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:atmadarsh/presentation/widgets/page_title_view.dart';
 import 'package:atmadarsh/core/utils/DeviceInfoUtil.dart';
 

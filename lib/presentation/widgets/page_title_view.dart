@@ -7,7 +7,7 @@ class PageTitleView {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
-          color: backgroundColor!=null? backgroundColor:AppColors.darkGrey,
+          color: backgroundColor ?? AppColors.darkGrey,
           border: Border.all(
             color: AppColors.primaryBlack, // subtle border
             width: 4,
