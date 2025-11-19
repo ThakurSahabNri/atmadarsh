@@ -2,29 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:atmadarsh/core/theme/app_colors.dart';
 import 'package:atmadarsh/presentation/widgets/page_title_view.dart';
 import 'package:atmadarsh/core/utils/DeviceInfoUtil.dart';
+import 'package:atmadarsh/core/theme/text_styles.dart';
 
 class AboutPage extends StatelessWidget{
    AboutPage({super.key});
-  final String aboutMe="Nulla in velit a metus rhoncus tempus. Nulla congue nulla vel sem varius finibus.Sed ornare sit amet lorem\n sed viverra. In vel urna quis libero viverra facilisis ut ac est.";
-   List<String> skills= [
-     "Flutter Development",
-     "UI/UX Design",
-     "API Integration",
-     "Firebase Setup",
-     "App Store Deployment",
+  final String aboutMe="Flutter developer with hands-on experience in CRMnext, AI features, Firebase, and scalable UI components. I love creating\n elegant solutions and building apps that are both powerful and beautifully designed.";
+   List<WorkOffer> workOfferList= [
+     WorkOffer(
+       workIconPath: "assets/icons/icon-development.png",
+       workTitle: "Flutter App Development",
+       workDescription:"Building fast, scalable, and polished mobile apps using Flutter.\nClean architecture, reusable components, and production-ready performance."
+     ),
+     WorkOffer(
+         workIconPath: "assets/icons/icon-design.png",
+         workTitle: "UI/UX Design",
+         workDescription:"Designing modern, intuitive, and user-focused app interfaces.\nReusable widgets and smooth user flows that elevate the overall experience."
+     ),
+     WorkOffer(
+         workIconPath: "assets/icons/icon-maintenance.png",
+         workTitle: "API Integration & Backend Connectivity",
+         workDescription:"Seamless integration of REST APIs and secure data workflows.\nOptimized communication between frontend and backend systems."
+     ),
+     WorkOffer(
+         workIconPath: "assets/icons/icon-maintenance.png",
+         workTitle: "Firebase Setup",
+         workDescription:"End-to-end Firebase integration for modern app features.\nAuth, database, analytics, and cloud services tailored to your app."
+     ), WorkOffer(
+         workIconPath: "assets/icons/icon-maintenance.png",
+         workTitle: "App Store Deployment & Release",
+         workDescription:"Managing complete release workflows for Play Store & App Store.\nSigning, builds, platform fixes, and smooth app publishing."
+     ),
    ];
+   bool isMobile= false;
 
   @override
   Widget build(BuildContext context){
-    final isOdd = skills.length.isOdd;
-    final displayCount = isOdd ? skills.length - 1 : skills.length;
-    final isMobile = DeviceTypeUtil.isMobile(context);
+    final isOdd = workOfferList.length.isOdd;
+    final displayCount = isOdd ? workOfferList.length - 1 : workOfferList.length;
+      isMobile = DeviceTypeUtil.isMobile(context);
 
     return SingleChildScrollView(
       child:Center(
         child:Padding(
           padding: EdgeInsetsGeometry.all(40),
           child:Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             PageTitleView.pageTitleView("ABOUT ME"),
 
@@ -36,6 +58,7 @@ class AboutPage extends StatelessWidget{
                   fontSize: 15,
                   fontFamily: "Open Sans",
               ),
+              textAlign: TextAlign.center,
             ),
 
 
@@ -73,40 +96,50 @@ class AboutPage extends StatelessWidget{
             ),
 
 
-            // 🔹 Grid for even part
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: displayCount,
-              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isMobile? 1: 2, // 2 columns
-                mainAxisSpacing: 14,
-                crossAxisSpacing: 14,
-                childAspectRatio: isMobile? 6:5, // adjust width:height ratio
+            Padding(
+              padding: EdgeInsetsGeometry.only(left: 80,right: 80),
+              child: Column(
+                children: [
+                  // 🔹 Grid for even part
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.all(10),
+                    shrinkWrap: true,
+                    itemCount: displayCount,
+                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: isMobile? 1: 2, // 2 columns
+                      mainAxisSpacing: 14,
+                      crossAxisSpacing: 14,
+                      childAspectRatio: isMobile? 6:3.5, // adjust width:height ratio
+                    ),
+                    itemBuilder: (context, index) {
+                      return skillBox(work: workOfferList[index]);
+                    },
+                  ),
+
+
+                  //  Centered last item if odd
+                  if (isOdd && !isMobile) ...[
+                    const SizedBox(height: 16),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5, // centered half width
+                        child: skillBox(work:workOfferList.last),
+                      ),
+                    ),
+                  ],
+
+                  // For mobile, just put the last item normally below
+                  if (isOdd && isMobile) ...[
+                    const SizedBox(height: 14),
+                    skillBox(work: workOfferList.last),
+                  ],
+                ],
               ),
-              itemBuilder: (context, index) {
-                return skillBox(title: skills[index].toString());
-              },
             ),
 
 
-            //  Centered last item if odd
-            if (isOdd && !isMobile) ...[
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5, // centered half width
-                  child: skillBox(title: skills.last.toString()),
-                ),
-              ),
-            ],
-
-              // For mobile, just put the last item normally below
-              if (isOdd && isMobile) ...[
-                const SizedBox(height: 14),
-                skillBox(title: skills.last),
-              ],
 
             SizedBox(height: 30,),
             Image.asset(
@@ -121,27 +154,55 @@ class AboutPage extends StatelessWidget{
     );
   }
 
-  Widget skillBox({required String title}){
-    return Container(
-      alignment: Alignment.center,
-      // padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-      decoration: BoxDecoration(
-        color: AppColors.darkGrey,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.primaryBlack, width: 1),
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontFamily: "Montserrat",
-          color: AppColors.textBlack,
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.center,
-      ),
+  Widget skillBox({required WorkOffer work}){
+    return  Container(
+       padding: EdgeInsets.all(30),
+       child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                direction: Axis.horizontal,
+                // alignment: WrapAlignment.end,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: -20.0,
+                children: [
+                  Image.asset(work.workIconPath,
+                    width: isMobile?45:60,
+                    height: isMobile?45:60,),
+
+                  Text(work.workTitle,
+                      style:TextStyles(
+                        textColor: AppColors.textBlack,
+                        fontSize: isMobile?17:22,
+                      ).getBoldStyle())
+                ],
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(left: 40) ,
+                child: Text(work.workDescription,
+                    style: TextStyles(
+                      textColor: AppColors.textBlack,
+                      fontSize: isMobile?13: 14,
+                    ).getRegularStyle(),
+                    textAlign: TextAlign.start),
+              )
+
+            ]
+        )
     );
   }
 
 
+}
+
+class WorkOffer{
+  String workIconPath;
+  String workTitle;
+  String workDescription;
+  WorkOffer({
+    this.workIconPath= "assets/icons/icon-maintenance.png",
+    required this.workTitle,
+    required this.workDescription
+});
 }

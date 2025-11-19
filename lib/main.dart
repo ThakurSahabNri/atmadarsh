@@ -57,8 +57,8 @@ class MyApp extends StatelessWidget {
           onSurface: AppColors.textWhite,
         ),
       ),
-      // home:HomePage(),
-      home: ConfigEditorScreen(initialConfig: initialConfig,),
+      home:HomePage(),
+      // home: ConfigEditorScreen(initialConfig: initialConfig,),
     );
   }
 }
