@@ -108,9 +108,9 @@ class AboutPage extends StatelessWidget{
                     itemCount: displayCount,
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: isMobile? 1: 2, // 2 columns
-                      mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
-                      childAspectRatio: isMobile? 6:3.5, // adjust width:height ratio
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      childAspectRatio: isMobile? 6:3.2, // adjust width:height ratio
                     ),
                     itemBuilder: (context, index) {
                       return skillBox(work: workOfferList[index]);
