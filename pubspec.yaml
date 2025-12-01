@@ -65,7 +65,7 @@ flutter:
   assets:
     - assets/icons/atmadarsh_logo.png
     - assets/icons/separator.png
-    - assets/images/portfolioBackgroundImage.png
+    - assets/images/
     - assets/icons/icon_back_to_top.png
     - assets/portfolio_config_json.json
     - assets/icons/icon-maintenance.png
