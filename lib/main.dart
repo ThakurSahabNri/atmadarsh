@@ -5,9 +5,15 @@ import 'config_editor/config_editor_screen.dart';
 import 'package:atmadarsh/data/models/portfolio_config.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  ///firebase initialization
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 
   // Load JSON file
   final jsonString = await rootBundle

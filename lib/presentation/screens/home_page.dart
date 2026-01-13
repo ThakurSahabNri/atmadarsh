@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
+  int selectedIndex = 3;
 
   void handleNavigation(String page) {
     setState(() {
