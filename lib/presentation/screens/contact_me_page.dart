@@ -5,17 +5,28 @@ import 'package:atmadarsh/core/theme/app_colors.dart';
 import 'package:atmadarsh/presentation/widgets/text_editing_control.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactMePage extends StatelessWidget{
-   ContactMePage({super.key});
+class ContactMePage extends StatefulWidget {
+  const ContactMePage({super.key});
+
+  @override
+  State<ContactMePage> createState() => _ContactMePageState();
+}
+
+class _ContactMePageState extends State<ContactMePage> {
    TextEditingController nameTextEditingController=TextEditingController();
    TextEditingController emailTextEditingController=TextEditingController();
    TextEditingController numberTextEditingController=TextEditingController();
    TextEditingController messageTextEditingController=TextEditingController();
    final ScrollController _scrollController = ScrollController();
 
+   String? nameError;
+   String? emailError;
+   String? numberError;
+   String? messageError;
+
   @override
   Widget build(BuildContext context){
-    String aboutMe="Nulla in velit a metus rhoncus tempus. Nulla congue nulla vel sem varius finibus. Sed ornare sit amet lorem\n sed viverra. In vel urna quis libero viverra facilisis ut ac est.";
+    String aboutMe="If you have an idea, a project, or need help turning your vision into reality, I’m here to help.\nWhether it’s app development, UI/UX design, backend integration, or solving complex problems—I’d love to collaborate and create something impactful with you.";
     return SingleChildScrollView(
         child: Center(
             child:Column(
@@ -44,7 +55,24 @@ class ContactMePage extends StatelessWidget{
               SizedBox(height: 24,),
 
              GestureDetector(
-               onTap: (){},
+               onTap: (){
+                 setState(() {
+                   nameError = nameTextEditingController.text.isEmpty ? "Name is required" : null;
+                   emailError = emailTextEditingController.text.isEmpty
+                       ? "Email is required"
+                       : (!_isValidEmail(emailTextEditingController.text) ? "Invalid email" : null);
+                   numberError = numberTextEditingController.text.isNotEmpty &&
+                       !_isValidMobile(numberTextEditingController.text)
+                       ? "Invalid mobile number":
+                   numberTextEditingController.text.length>10?"Only 10 digits are allowed"
+                       : null;
+                   messageError = messageTextEditingController.text.isEmpty ? "Message is required" : null;
+                 });
+
+                 if(nameError == null && emailError == null && messageError == null){
+                   _onSubmitted();
+                 }
+               },
                child: Container(
                  decoration: BoxDecoration(
                      border: Border(
@@ -83,6 +111,7 @@ class ContactMePage extends StatelessWidget{
           textType: "Text",
           isMandatory: true,
           hintText: "ENTER YOUR NAME*",
+          errorText: nameError,
         ),
 
         SizedBox(height: 20,),
@@ -93,6 +122,7 @@ class ContactMePage extends StatelessWidget{
           textType: "Email",
           isMandatory: true,
           hintText: "ENTER YOUR EMAIL*",
+          errorText: emailError,
         ),
 
         SizedBox(height: 20,),
@@ -103,6 +133,7 @@ class ContactMePage extends StatelessWidget{
           textType: "Number",
           isMandatory: false,
           hintText: "PHONE NUMBER",
+          errorText: numberError,
         ),
         //
         SizedBox(height: 20,),
@@ -112,6 +143,7 @@ class ContactMePage extends StatelessWidget{
           maxLine: 5,
           isMandatory: true,
           hintText: "YOUR MESSAGE*",
+          errorText: messageError,
         ),
       ],
     );
@@ -163,12 +195,12 @@ class ContactMePage extends StatelessWidget{
            children: [
              _socialLink(
                "GitHub",
-               "https://github.com/yourusername",
+               "https://github.com/ThakurSahabNri",
                Icons.code,
              ),
              _socialLink(
                "LinkedIn",
-               "https://linkedin.com/in/yourusername",
+               "https://linkedin.com/in/manoj-kumar-968b4123a",
                Icons.link,
              ),
              _socialLink(
@@ -178,7 +210,7 @@ class ContactMePage extends StatelessWidget{
              ),
              _socialLink(
                "Email",
-               "mailto:youremail@example.com",
+               "mailto:manothakur2001@gmail.com",
                Icons.mail,
              ),
            ],
@@ -224,6 +256,36 @@ class ContactMePage extends StatelessWidget{
      if (await canLaunchUrl(uri)) {
        await launchUrl(uri, mode: LaunchMode.externalApplication);
      }
+   }
+
+   Future<void> _onSubmitted() async {
+     String name = nameTextEditingController.text;
+     String email = emailTextEditingController.text;
+     String number = numberTextEditingController.text;
+     String message = messageTextEditingController.text;
+
+     final subject = Uri.encodeComponent("New Contact Message from $name");
+     final body = Uri.encodeComponent("""
+          Name: $name
+          Email: $email
+          Phone: $number
+
+          Message:
+          $message
+          """);
+     final mailUrl = "mailto:manothakur2001@gmail.com?subject=$subject&body=$body";
+     final uri = Uri.parse(mailUrl);
+     if (await canLaunchUrl(uri)) {
+       await launchUrl(uri);
+     }
+   }
+
+   bool _isValidEmail(String email){
+     return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);
+   }
+
+   bool _isValidMobile(String number) {
+     return RegExp(r'^\+?[0-9]{10,15}$').hasMatch(number);
    }
 
 }
